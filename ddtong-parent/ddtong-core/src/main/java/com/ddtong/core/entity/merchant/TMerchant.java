@@ -3,6 +3,14 @@ package com.ddtong.core.entity.merchant;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 
+* @ClassName: TMerchant 
+* @Description: 商家实体
+* @author xc_qin
+* @date 2017年12月6日 下午4:03:04 
+*
+ */
 public class TMerchant implements Serializable{
 
 	private static final long serialVersionUID = 3120716223024788418L;

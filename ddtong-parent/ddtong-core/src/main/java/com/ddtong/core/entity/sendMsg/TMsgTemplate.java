@@ -2,6 +2,14 @@ package com.ddtong.core.entity.sendMsg;
 
 import java.io.Serializable;
 
+/**
+ * 
+* @ClassName: TMsgTemplate 
+* @Description: 短信模板信息
+* @author xc_qin
+* @date 2017年12月6日 下午4:59:23 
+*
+ */
 public class TMsgTemplate implements Serializable{
 
 	private static final long serialVersionUID = 6761894829869839291L;

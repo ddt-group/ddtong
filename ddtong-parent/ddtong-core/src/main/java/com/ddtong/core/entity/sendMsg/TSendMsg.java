@@ -3,6 +3,14 @@ package com.ddtong.core.entity.sendMsg;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 
+* @ClassName: TSendMsg 
+* @Description: 短信记录
+* @author xc_qin
+* @date 2017年12月6日 下午4:59:41 
+*
+ */
 public class TSendMsg implements Serializable{
 	
 	
