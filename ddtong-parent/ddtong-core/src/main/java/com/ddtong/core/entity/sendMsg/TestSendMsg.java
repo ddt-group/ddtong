@@ -1,4 +1,4 @@
-package com.ddtong.core.entity;
+package com.ddtong.core.entity.sendMsg;
 
 import java.util.Date;
 import java.util.HashMap;
