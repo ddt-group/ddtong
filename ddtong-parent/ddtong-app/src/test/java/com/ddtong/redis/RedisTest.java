@@ -1,5 +1,6 @@
 package com.ddtong.redis;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -13,7 +14,10 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ddtong.core.entity.YshDemoEntity;
+import com.ddtong.core.enums.TerminalTypeEnum;
+import com.ddtong.core.enums.UserTypeEnum;
 import com.ddtong.core.enums.YshDemoSexEnum;
+import com.ddtong.core.vo.LoginUserVO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -27,14 +31,14 @@ public class RedisTest {
 
 	@Autowired
 	private DdtRedisClient ddtRedisClient;
-	
-	//@Test
+
+	// @Test
 	public void test() throws Exception {
 		stringRedisTemplate.opsForValue().set("aaa", "111");
 		Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
 	}
 
-	//@Test
+	// @Test
 	public void testObj() throws Exception {
 		YshDemoEntity entity = new YshDemoEntity("yshdemo1", "a123456", YshDemoSexEnum.MAN);
 		ValueOperations<String, YshDemoEntity> operations = redisTemplate.opsForValue();
@@ -49,5 +53,21 @@ public class RedisTest {
 			System.out.println("exists is false");
 		}
 		Assert.assertEquals("yshdemo1", operations.get("com.neox").getUserName());
+	}
+
+	//@Test
+	public void testObj2() throws Exception {
+		LoginUserVO vo = new LoginUserVO();
+		vo.setUserId("1234");
+		vo.setUserType(UserTypeEnum.CUSTOM);
+		vo.setTerminaType(TerminalTypeEnum.WEB);
+		vo.setDeviceId(UUID.randomUUID().toString());
+
+		//ValueOperations<String, LoginUserVO> operations = redisTemplate.opsForValue();
+		String key = "loginUser_" + vo.getTerminaType() + "_" + vo.getUserType() + "_" + vo.getUserId();
+		System.out.println(key);
+		//operations.set(key, vo);
+
+		//System.out.println(operations.get(key).getTerminaType().getValue());
 	}
 }
