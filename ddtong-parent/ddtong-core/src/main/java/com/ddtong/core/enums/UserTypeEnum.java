@@ -13,5 +13,15 @@ public enum UserTypeEnum {
 	public int getValue() {
 		return value;
 	}
+	
+	public static UserTypeEnum getEnumByValue(int value) {
+		UserTypeEnum[] enumss = UserTypeEnum.values();
+		for (UserTypeEnum itemEnum : enumss) {
+			if (itemEnum.getValue() == value) {
+				return itemEnum;
+			}
+		}
+		throw new IllegalArgumentException(UserTypeEnum.class.getName() + " No element matches " + value);
+	}
 
 }
