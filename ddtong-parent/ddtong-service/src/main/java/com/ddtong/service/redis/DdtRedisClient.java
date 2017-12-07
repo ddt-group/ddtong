@@ -1,4 +1,4 @@
-package com.ddtong.redis;
+package com.ddtong.service.redis;
 
 
 import java.io.Serializable;
@@ -84,17 +84,17 @@ public class DdtRedisClient {
      * @param value
      * @return
      */
-    public boolean set(final String key, Object value) {
-        boolean result = false;
-        try {
-            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-            operations.set(key, value);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+	public boolean set(final String key, Object value) {
+		boolean result = false;
+		try {
+			ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+			operations.set(key, value);
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
     /**
      * 写入缓存

@@ -1,4 +1,4 @@
-package com.ddtong.redis;
+package com.ddtong.service.redis;
 
 import java.lang.reflect.Method;
 

@@ -1,4 +1,4 @@
-package com.ddtong.ddtfw.controller;
+package com.ddtong.controller.ddtfw;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,13 +19,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ddtong.core.common.DdtongConstant;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 
 @Controller
-@RequestMapping(value = "/{zdpath}/ddtfw/barcode")
+@RequestMapping(value = DdtongConstant.APP_API_PATH + "/ddtfw/barcode")
 public class BarcodeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BarcodeController.class);
@@ -41,14 +42,13 @@ public class BarcodeController {
 	 */
 	@RequestMapping(value="/biuldbarcodeimage", produces="image/jpeg")
 	public void getBarcodeImage (
-			@PathVariable("zdpath") String zdpath,
 			@RequestParam(value = "barcode", required = true) String barcode,
 			@RequestParam(value = "type", required = true, defaultValue="0") int type,
 			@RequestParam(value = "width", required = false, defaultValue="425") int width,
 			@RequestParam(value = "height", required = false, defaultValue="125") int height,
 			HttpServletResponse response) {
 		
-		logger.info(zdpath + "进入生成条形码/二维码");
+		logger.info( "进入生成条形码/二维码");
 		try {
 			if(StringUtils.isEmpty(barcode)) {
 				return;

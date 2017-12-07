@@ -1,4 +1,4 @@
-package com.ddtong.ddtfw.captcha;
+package com.ddtong.service.captcha;
 
 import java.awt.Color;
 import java.awt.Font;
