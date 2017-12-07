@@ -12,7 +12,7 @@ import com.ddtong.service.demo.YshDemoUserService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/test/user")
 public class YshDemoUserController {
 
 	
