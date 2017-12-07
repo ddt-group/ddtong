@@ -18,7 +18,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@Configuration
 @SpringBootApplication
 @EnableAutoConfiguration
-@EnableTransactionManagement(order = 10) //¿ªÆôÊÂÎñ£¬²¢ÉèÖÃorderÖµ£¬Ä¬ÈÏÊÇIntegerµÄ×î´óÖµ
+//å¼€å¯äº‹åŠ¡ï¼Œå¹¶è®¾ç½®orderå€¼ï¼Œé»˜è®¤æ˜¯Integerçš„æœ€å¤§å€¼
+@EnableTransactionManagement(order = 10)
 //@ComponentScan
 //@EntityScan
 public class DdtongAppStartApplication {
