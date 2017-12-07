@@ -139,7 +139,11 @@ public class MybatisConfiguration {
         		if(typeKey == null){
         		//	System.err.println("使用数据库write.............");
                 //    return DataSourceType.write.getType();
-        			throw new NullPointerException("数据库路由时，决定使用哪个数据库源类型不能为空...");
+        			//throw new NullPointerException("数据库路由时，决定使用哪个数据库源类型不能为空...");
+        			
+        			System.err.println("数据库源类型不能为空, 数据库路由无法决定使用哪个数据库, 采取默认使用  write 数据库write.............");
+        			
+        			 return DataSourceType.write.getType();
         		}
         		
                 if (typeKey.equals(DataSourceType.write.getType())){
