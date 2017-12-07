@@ -4,7 +4,7 @@ package com.ddtong.core.exception;
  * 未登录异常定义
  *
  */
-public class UnLoginAccoutException extends RuntimeException {
+public class UnLoginAccoutException extends Exception {
 
 	private static final long serialVersionUID = -7623727729223436032L;
 

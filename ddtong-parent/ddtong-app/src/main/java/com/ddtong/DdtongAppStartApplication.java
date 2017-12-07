@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,7 +17,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //@Configuration
 @SpringBootApplication
-//@EnableTransactionManagement
+@EnableAutoConfiguration
+@EnableTransactionManagement(order = 10) //开启事务，并设置order值，默认是Integer的最大值
 //@ComponentScan
 //@EntityScan
 public class DdtongAppStartApplication {

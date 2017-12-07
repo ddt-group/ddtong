@@ -14,10 +14,12 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ddtong.core.entity.YshDemoEntity;
+import com.ddtong.core.enums.ClientApplicationEnum;
 import com.ddtong.core.enums.TerminalTypeEnum;
 import com.ddtong.core.enums.UserTypeEnum;
 import com.ddtong.core.enums.YshDemoSexEnum;
 import com.ddtong.core.vo.LoginUserVO;
+import com.ddtong.service.redis.DdtRedisClient;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -55,19 +57,17 @@ public class RedisTest {
 		Assert.assertEquals("yshdemo1", operations.get("com.neox").getUserName());
 	}
 
-	//@Test
+	// @Test
 	public void testObj2() throws Exception {
-		LoginUserVO vo = new LoginUserVO();
-		vo.setUserId("1234");
-		vo.setUserType(UserTypeEnum.CUSTOM);
-		vo.setTerminaType(TerminalTypeEnum.WEB);
-		vo.setDeviceId(UUID.randomUUID().toString());
+		LoginUserVO vo = new LoginUserVO(ClientApplicationEnum.CUSTOM_APP, TerminalTypeEnum.ANDROID,
+				UserTypeEnum.CUSTOM, "1234");
 
-		//ValueOperations<String, LoginUserVO> operations = redisTemplate.opsForValue();
-		String key = "loginUser_" + vo.getTerminaType() + "_" + vo.getUserType() + "_" + vo.getUserId();
+		String key = "loginUser_" + vo.getTerminalTypeEnum() + "_" + vo.getUserTypeEnum() + "_" + vo.getUserId();
 		System.out.println(key);
-		//operations.set(key, vo);
 
-		//System.out.println(operations.get(key).getTerminaType().getValue());
+		ddtRedisClient.set(key, vo);
+
+		LoginUserVO rdvo = (LoginUserVO) ddtRedisClient.get(key);
+		System.out.println(rdvo.getUserId());
 	}
 }
