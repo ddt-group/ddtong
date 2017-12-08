@@ -7,6 +7,7 @@ import javax.net.ssl.TrustManager;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -39,6 +40,39 @@ public class HttpsClientBaseUtil extends HttpClientBase {
 			httpResponse = execute(httpClient, httpPost);
 			String responseContent = parseToString(httpResponse);
 
+			return responseContent;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			close(httpResponse, httpClient);
+		}
+	}
+	
+	
+	/**
+	 * GET 方式调用
+	 * 
+	 * @param url
+	 *            调用地址
+	 * @param headParamMap
+	 *            请求头
+	 * @return
+	 * @throws Exception
+	 */
+	public static String get(String url, Map<String, String> headParamMap) throws Exception {
+		TrustManager[] tm = { new MyX509TrustManager() };
+		SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+		sslContext.init(null, tm, new java.security.SecureRandom());
+		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
+		CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+		CloseableHttpResponse httpResponse = null;
+		try {
+			HttpGet httpGet = new HttpGet(url);
+			buildHeadInfo(httpGet, headParamMap);
+
+			logger.info("\n请求地址: " + url);
+			httpResponse = execute(httpClient, httpGet);
+			String responseContent = parseToString(httpResponse);
 			return responseContent;
 		} catch (Exception e) {
 			throw e;

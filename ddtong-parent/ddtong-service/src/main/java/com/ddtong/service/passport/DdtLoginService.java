@@ -10,7 +10,7 @@ import com.ddtong.core.vo.LoginUserVO;
 
 public interface DdtLoginService {
 
-	public ApiResponseResult loginAcc(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
+	public ApiResponseResult accLogin(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
 			UserTypeEnum userTypeEnum, String account, String pwd) throws ServiceException;
 
 	public LoginUserVO validateToken(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,

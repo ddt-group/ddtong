@@ -14,6 +14,7 @@ import com.ddtong.core.exception.ServiceException;
 import com.ddtong.core.exception.UnLoginAccoutException;
 import com.ddtong.core.vo.ApiResponseResult;
 import com.ddtong.core.vo.LoginUserVO;
+import com.ddtong.core.vo.ThirdpartyLoginParamVO;
 import com.ddtong.service.passport.DdtLoginService;
 import com.ddtong.service.passport.LoginBusiService;
 
@@ -28,9 +29,24 @@ public class LoginBusiServiceImpl extends AbstractLoginService implements LoginB
 	@Resource(name = "frontLoginService")
 	private DdtLoginService frontLoginService;
 
-	public void login4Thirdparty(TerminalTypeEnum terminalTypeEnum, UserTypeEnum userTypeEnum, String accesstoken,
-			String openid, int thirdpartyType) {
+	public void thirdpartyLogin(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
+			UserTypeEnum userTypeEnum, ThirdpartyLoginParamVO thridparamvo) {
+		
+		
+	}
 
+	private DdtLoginService getDdtLoginService(ClientApplicationEnum client) {
+		if (client == ClientApplicationEnum.CUSTOM_APP) {
+			return appLoginService;
+		} else if (client == ClientApplicationEnum.MERCHANT_APP) {
+			return appLoginService;
+		} else if (client == ClientApplicationEnum.CUSTOM_WEB) {
+			return frontLoginService;
+		} else if (client == ClientApplicationEnum.MERCHANT_WEB) {
+			return frontLoginService;
+		} else {
+			throw ServiceException.failure("参数错误");
+		}
 	}
 
 	/**
@@ -38,20 +54,11 @@ public class LoginBusiServiceImpl extends AbstractLoginService implements LoginB
 	 * 
 	 * @throws UnLoginAccoutException
 	 */
-	public ApiResponseResult loginAcc(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
+	public ApiResponseResult accLogin(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
 			UserTypeEnum userTypeEnum, String account, String pwd) throws ServiceException {
 
-		if (client == ClientApplicationEnum.CUSTOM_APP) {
-			return appLoginService.loginAcc(client, terminalTypeEnum, userTypeEnum, account, pwd);
-		} else if (client == ClientApplicationEnum.MERCHANT_APP) {
-			return appLoginService.loginAcc(client, terminalTypeEnum, userTypeEnum, account, pwd);
-		} else if (client == ClientApplicationEnum.CUSTOM_WEB) {
-			return frontLoginService.loginAcc(client, terminalTypeEnum, userTypeEnum, account, pwd);
-		} else if (client == ClientApplicationEnum.MERCHANT_WEB) {
-			return frontLoginService.loginAcc(client, terminalTypeEnum, userTypeEnum, account, pwd);
-		} else {
-			throw ServiceException.failure("参数错误");
-		}
+		DdtLoginService getDdtLoginService = getDdtLoginService(client);
+		return getDdtLoginService.accLogin(client, terminalTypeEnum, userTypeEnum, account, pwd);
 	}
 
 	public LoginUserVO validateToken() throws UnLoginAccoutException {
@@ -70,18 +77,9 @@ public class LoginBusiServiceImpl extends AbstractLoginService implements LoginB
 
 	}
 
-	private LoginUserVO validateToken(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
+	public LoginUserVO validateToken(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
 			UserTypeEnum userTypeEnum, Long userid, String ticket_md5) throws UnLoginAccoutException {
-		if (client == ClientApplicationEnum.CUSTOM_APP) {
-			return appLoginService.validateToken(client, terminalTypeEnum, userTypeEnum, userid, ticket_md5);
-		} else if (client == ClientApplicationEnum.MERCHANT_APP) {
-			return appLoginService.validateToken(client, terminalTypeEnum, userTypeEnum, userid, ticket_md5);
-		} else if (client == ClientApplicationEnum.CUSTOM_WEB) {
-			return frontLoginService.validateToken(client, terminalTypeEnum, userTypeEnum, userid, ticket_md5);
-		} else if (client == ClientApplicationEnum.MERCHANT_WEB) {
-			return frontLoginService.validateToken(client, terminalTypeEnum, userTypeEnum, userid, ticket_md5);
-		} else {
-			throw new UnLoginAccoutException("验证失败");
-		}
+		DdtLoginService getDdtLoginService = getDdtLoginService(client);
+		return getDdtLoginService.validateToken(client, terminalTypeEnum, userTypeEnum, userid, ticket_md5);
 	}
 }

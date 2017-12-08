@@ -15,12 +15,12 @@ public enum ClientApplicationEnum {
 	/**
 	 * 消费者web
 	 */
-	CUSTOM_WEB(1),
+	CUSTOM_WEB(3),
 
 	/**
 	 * 商家web
 	 */
-	MERCHANT_WEB(2);
+	MERCHANT_WEB(4);
 
 	private int value;
 

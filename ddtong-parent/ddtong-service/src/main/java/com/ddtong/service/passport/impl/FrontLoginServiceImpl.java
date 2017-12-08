@@ -22,7 +22,7 @@ public class FrontLoginServiceImpl extends AbstractLoginService implements DdtLo
 	private static final String DDT_CURRENT_LOGIN_USER = "DDT_CURRENT_LOGIN_USER";
 
 	@Override
-	public ApiResponseResult loginAcc(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
+	public ApiResponseResult accLogin(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
 			UserTypeEnum userTypeEnum, String account, String pwd) throws ServiceException {
 		// 校验用户名密码
 		Long userId = loginAccCheck(terminalTypeEnum, userTypeEnum, account, pwd);
@@ -33,8 +33,12 @@ public class FrontLoginServiceImpl extends AbstractLoginService implements DdtLo
 		String token_md5 = buildToken(loginUserVO);
 		loginUserVO.setToken(token_md5);
 
-		HttpServletRequest request = getRequest();
-		request.getSession().setAttribute(DDT_CURRENT_LOGIN_USER + "_" + client, loginUserVO);
+//		HttpServletRequest request = getRequest();
+//		request.getSession().setAttribute(DDT_CURRENT_LOGIN_USER + "_" + client, loginUserVO);
+		
+		String ticketcode = getLoginUserRedisKey(loginUserVO);
+		long expireTime = 60 * 60 * 12;//12小时
+		ddtRedisClient.set(ticketcode, loginUserVO, expireTime);
 
 		// 封装返回数据
 		Map<String, Object> retMap = new HashMap<String, Object>();
@@ -55,26 +59,39 @@ public class FrontLoginServiceImpl extends AbstractLoginService implements DdtLo
 			throw new UnLoginAccoutException("验证TOKEN失败");
 		}
 
-		HttpServletRequest request = getRequest();
-		Object obju = request.getSession().getAttribute(DDT_CURRENT_LOGIN_USER + "_" + client);
-		if (obju == null) {
+//		HttpServletRequest request = getRequest();
+//		Object obju = request.getSession().getAttribute(DDT_CURRENT_LOGIN_USER + "_" + client);
+//		if (obju == null) {
+//			throw new UnLoginAccoutException("验证TOKEN失败");
+//		}
+//		LoginUserVO sessionloginUserVO = (LoginUserVO) obju;
+//
+//		String token_md5 = sessionloginUserVO.getToken();
+//
+//		if (!ticket_md5.equals(token_md5)) {
+//			throw new UnLoginAccoutException("验证TOKEN失败");
+//		}
+		
+		
+		LoginUserVO checkLoginUserParam = new LoginUserVO(client, terminalTypeEnum, userTypeEnum, userid + "");
+		String ticketcode = getLoginUserRedisKey(checkLoginUserParam);
+		
+		if(!ddtRedisClient.exists(ticketcode)){
 			throw new UnLoginAccoutException("验证TOKEN失败");
 		}
-		LoginUserVO sessionloginUserVO = (LoginUserVO) obju;
-
-		String token_md5 = sessionloginUserVO.getToken();
-
+		
+		LoginUserVO curLoginUserVO = (LoginUserVO) ddtRedisClient.get(ticketcode);
+		String token_md5 = curLoginUserVO.getToken();
 		if (!ticket_md5.equals(token_md5)) {
 			throw new UnLoginAccoutException("验证TOKEN失败");
 		}
 
 		LoginUserVO result = new LoginUserVO();
-		result.setClient(sessionloginUserVO.getClient());
-		result.setTerminalTypeEnum(sessionloginUserVO.getTerminalTypeEnum());
-		result.setUserTypeEnum(sessionloginUserVO.getUserTypeEnum());
-		result.setUserId(sessionloginUserVO.getUserId());
+		result.setClient(curLoginUserVO.getClient());
+		result.setTerminalTypeEnum(curLoginUserVO.getTerminalTypeEnum());
+		result.setUserTypeEnum(curLoginUserVO.getUserTypeEnum());
+		result.setUserId(curLoginUserVO.getUserId());
 
 		return result;
-
 	}
 }

@@ -21,7 +21,7 @@ public abstract class AbstractLoginService {
 	protected DdtRedisClient ddtRedisClient;
 
 	protected String getLoginUserRedisKey(LoginUserVO vo) {
-		String key = "loginuser_" + vo.getClient().getValue() + "_" + vo.getUserId();
+		String key = "loginuser_" + vo.getClient() + "_" + vo.getUserId();
 		return key;
 	}
 

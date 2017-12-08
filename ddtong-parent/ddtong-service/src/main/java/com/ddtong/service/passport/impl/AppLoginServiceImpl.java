@@ -17,7 +17,7 @@ import com.ddtong.service.passport.DdtLoginService;
 @Service(value = "appLoginService")
 public class AppLoginServiceImpl extends AbstractLoginService implements DdtLoginService {
 
-	public ApiResponseResult loginAcc(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
+	public ApiResponseResult accLogin(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
 			UserTypeEnum userTypeEnum, String account, String pwd) throws ServiceException {
 
 		// 校验用户名密码
@@ -35,7 +35,7 @@ public class AppLoginServiceImpl extends AbstractLoginService implements DdtLogi
 		loginUserVO.setToken(token_md5);
 
 		String ticketcode = getLoginUserRedisKey(loginUserVO);
-		ddtRedisClient.set(ticketcode, token_md5);
+		ddtRedisClient.set(ticketcode, loginUserVO);
 
 		// 封装返回数据
 		Map<String, Object> retMap = new HashMap<String, Object>();
