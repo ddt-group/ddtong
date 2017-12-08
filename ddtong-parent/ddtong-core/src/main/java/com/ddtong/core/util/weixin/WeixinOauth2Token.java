@@ -7,14 +7,6 @@ package com.ddtong.core.util.weixin;
  * 
  */
 public class WeixinOauth2Token {
-	//openID 静态变量
-	public static String WEIXIN_OPENID = "weixin_openid";
-	
-	//mobile 静态变量
-	public static String WEIXIN_MOBILE = "weixin_mobile";
-	
-	//nickname 昵称 静态变量
-	public static String WEIXIN_NICKNAME = "weixin_nickname";
 	
 	// 网页授权接口调用凭证
 	private String accessToken;

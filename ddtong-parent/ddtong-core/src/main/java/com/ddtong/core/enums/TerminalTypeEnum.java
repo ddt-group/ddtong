@@ -1,7 +1,7 @@
 package com.ddtong.core.enums;
 
 /**
- * 
+ * 客户端类型
  */
 public enum TerminalTypeEnum {
 

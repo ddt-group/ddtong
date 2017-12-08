@@ -1,5 +1,9 @@
 package com.ddtong.core.enums;
 
+/**
+ * 终端应用
+ *
+ */
 public enum ClientApplicationEnum {
 
 	/**

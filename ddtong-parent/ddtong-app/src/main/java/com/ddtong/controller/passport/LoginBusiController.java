@@ -155,7 +155,8 @@ public class LoginBusiController {
 			@RequestHeader(value = "ddtusertype", required = true) int ddtusertype,
 			@RequestParam(value = "accesstoken", required = true) String accesstoken,
 			@RequestParam(value = "openid", required = true) String openid,
-			@RequestParam(value = "thridtype", required = true) int type) {
+			@RequestParam(value = "unionid", required = false) String unionid,
+			@RequestParam(value = "thridtype", required = true) int thridtype) {
 
 		
 		// service - 第三方登陆
