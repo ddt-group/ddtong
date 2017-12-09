@@ -1,0 +1,28 @@
+DROP VIEW IF EXISTS v_login_user;
+CREATE VIEW v_login_user AS SELECT
+	t.id,
+	1 AS usertype,
+	t.nick_name,
+	t.phone,
+	t.`password`,
+	t.pay_password,
+	t.source_uid,
+	t.source_type,
+	t.cid,
+	t.real_name
+FROM
+	t_custom t
+UNION
+	SELECT
+		t.id,
+		2 AS usertype,
+		t.nick_name,
+		t.phone,
+		t.`password`,
+		t.pay_password,
+		t.source_uid,
+		t.source_type,
+		t.cid,
+		t.real_name
+	FROM
+		t_merchant t;
