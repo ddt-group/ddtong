@@ -3,6 +3,8 @@ package com.ddtong.core.entity.custom;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.ddtong.core.entity.merchant.TMerchant;
+
 /**
  * 
 * @ClassName: TCustom 
@@ -43,6 +45,16 @@ public class TCustom implements Serializable{
 	
 	private String payPassword;
 	
+	private TMerchant tMerchant;//推荐人信息
+	
+	public TMerchant gettMerchant() {
+		return tMerchant;
+	}
+
+	public void settMerchant(TMerchant tMerchant) {
+		this.tMerchant = tMerchant;
+	}
+
 	public Long getId() {
 		return id;
 	}
