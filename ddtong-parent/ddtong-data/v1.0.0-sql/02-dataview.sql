@@ -1,7 +1,7 @@
 DROP VIEW IF EXISTS v_login_user;
 CREATE VIEW v_login_user AS SELECT
 	t.id,
-	1 AS usertype,
+	1 AS userType,
 	t.nick_name,
 	t.phone,
 	t.`password`,
@@ -9,13 +9,14 @@ CREATE VIEW v_login_user AS SELECT
 	t.source_uid,
 	t.source_type,
 	t.cid,
-	t.real_name
+	t.real_name,
+	t.state
 FROM
 	t_custom t
 UNION
 	SELECT
 		t.id,
-		2 AS usertype,
+		2 AS userType,
 		t.nick_name,
 		t.phone,
 		t.`password`,
@@ -23,6 +24,7 @@ UNION
 		t.source_uid,
 		t.source_type,
 		t.cid,
-		t.real_name
+		t.real_name,
+		t.state
 	FROM
 		t_merchant t;

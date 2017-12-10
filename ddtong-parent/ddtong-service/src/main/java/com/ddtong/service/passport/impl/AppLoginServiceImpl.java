@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ddtong.core.entity.passport.VLoginUser;
 import com.ddtong.core.enums.ClientApplicationEnum;
 import com.ddtong.core.enums.TerminalTypeEnum;
 import com.ddtong.core.enums.UserTypeEnum;
 import com.ddtong.core.exception.ServiceException;
 import com.ddtong.core.exception.UnLoginAccoutException;
+import com.ddtong.core.util.MD5;
 import com.ddtong.core.vo.ApiResponseResult;
 import com.ddtong.core.vo.LoginUserVO;
 import com.ddtong.service.passport.DdtLoginService;
@@ -20,8 +22,15 @@ public class AppLoginServiceImpl extends AbstractLoginService implements DdtLogi
 	public ApiResponseResult accLogin(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
 			UserTypeEnum userTypeEnum, String account, String pwd) throws ServiceException {
 
+		String pwd_md5 = MD5.encode(pwd);
 		// 校验用户名密码
-		Long userId = loginAccCheck(terminalTypeEnum, userTypeEnum, account, pwd);
+		VLoginUser vloginUser = vloginUserMapper.getLoginAcc(userTypeEnum.getValue(), account, pwd_md5);
+		if (vloginUser == null) {
+			throw ServiceException.failure("用户名或密码错误");
+		}
+
+		// Long userId =60005000L
+		Long userId = vloginUser.getId();
 
 		// 校验用户名密码成功后, 生成设备号
 		String deviceId = buildDeviceId();

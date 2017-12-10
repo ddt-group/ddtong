@@ -14,13 +14,13 @@ public enum ThirdpartyLoginTypeEnum {
 	 */
 	Alipay(2),
 	/**
-	 * 新浪
-	 */
-	Sina(3),
-	/**
 	 * 腾讯qq
 	 */
-	QQ(4);
+	QQ(4),
+	/**
+	 * 新浪
+	 */
+	Sina(3);
 
 	private int value;
 

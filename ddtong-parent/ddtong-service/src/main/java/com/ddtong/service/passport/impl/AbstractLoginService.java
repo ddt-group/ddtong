@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.ddtong.core.dao.mapper.passport.VLoginUserMapper;
 import com.ddtong.core.enums.TerminalTypeEnum;
 import com.ddtong.core.enums.UserTypeEnum;
 import com.ddtong.core.exception.ServiceException;
@@ -19,9 +20,12 @@ public abstract class AbstractLoginService {
 
 	@Autowired
 	protected DdtRedisClient ddtRedisClient;
+	
+	@Autowired
+	protected VLoginUserMapper vloginUserMapper;
 
 	protected String getLoginUserRedisKey(LoginUserVO vo) {
-		String key = "loginuser_" + vo.getClient() + "_" + vo.getUserId();
+		String key = "loginuser_" + vo.getClient().getValue() + "_" + vo.getUserId();
 		return key;
 	}
 
@@ -35,12 +39,6 @@ public abstract class AbstractLoginService {
 		String token = getLoginUserRedisKey(vo) + "_" + vo.getDeviceId();
 		String token_md5 = MD5.encode(token);
 		return token_md5;
-	}
-
-	protected Long loginAccCheck(TerminalTypeEnum terminalTypeEnum, UserTypeEnum userTypeEnum, String account,
-			String pwd) throws ServiceException {
-		// 判断用户名密码
-		return 60005000L;
 	}
 
 	protected final ServletRequestAttributes getServletRequestAttributes() {

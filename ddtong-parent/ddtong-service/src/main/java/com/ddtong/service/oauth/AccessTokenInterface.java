@@ -6,6 +6,13 @@ package com.ddtong.service.oauth;
 public interface AccessTokenInterface {
 
 	/**
+	 * 获取OAuth认证编码 对应一种OAuth认证服务
+	 * 
+	 * @return
+	 */
+	public String getKey();
+
+	/**
 	 * 获取AccessToken
 	 * 
 	 * @param key
@@ -20,7 +27,7 @@ public interface AccessTokenInterface {
 	 * @param key
 	 * @return
 	 */
-	public String refreshAccessToken();
+	public abstract String refreshAccessToken();
 
 	/**
 	 * 获取OAuth认证源信息

@@ -6,7 +6,6 @@ public class OAuthConfig implements Serializable {
 
 	private static final long serialVersionUID = 3143843741418824973L;
 
-	protected String bsCode;
 	protected String bsName;
 	protected String bsUrl;
 	protected String appKey;
@@ -14,14 +13,6 @@ public class OAuthConfig implements Serializable {
 	protected String bsTokenUrl;
 	protected String bsRefreshTokenUrl;
 	protected String token;
-
-	public String getBsCode() {
-		return bsCode;
-	}
-
-	public void setBsCode(String bsCode) {
-		this.bsCode = bsCode;
-	}
 
 	public String getBsName() {
 		return bsName;
