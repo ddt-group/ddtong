@@ -28,14 +28,12 @@ public class FrontLoginServiceImpl extends AbstractLoginService implements DdtLo
 			UserTypeEnum userTypeEnum, String account, String pwd) throws ServiceException {
 		String pwd_md5 = MD5.encode(pwd);
 		// 校验用户名密码
-		VLoginUser vloginUser = vloginUserMapper.getLoginAcc(userTypeEnum.getValue(), account, pwd_md5);
+		VLoginUser vloginUser = vloginUserService.getLoginAcc(userTypeEnum.getValue(), account, pwd_md5);
 		if (vloginUser == null) {
 			throw ServiceException.failure("用户名或密码错误");
 		}
 
-		// Long userId =60005000L
 		Long userId = vloginUser.getId();
-
 		String deviceId = buildDeviceId();
 
 		LoginUserVO loginUserVO = new LoginUserVO(client, terminalTypeEnum, userTypeEnum, userId + "", deviceId);

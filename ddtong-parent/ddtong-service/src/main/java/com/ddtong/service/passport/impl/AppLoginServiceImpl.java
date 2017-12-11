@@ -3,8 +3,10 @@ package com.ddtong.service.passport.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ddtong.core.entity.passport.TUserLoginInfo;
 import com.ddtong.core.entity.passport.VLoginUser;
 import com.ddtong.core.enums.ClientApplicationEnum;
 import com.ddtong.core.enums.TerminalTypeEnum;
@@ -15,21 +17,24 @@ import com.ddtong.core.util.MD5;
 import com.ddtong.core.vo.ApiResponseResult;
 import com.ddtong.core.vo.LoginUserVO;
 import com.ddtong.service.passport.DdtLoginService;
+import com.ddtong.service.passport.UserLoginInfoService;
 
 @Service(value = "appLoginService")
 public class AppLoginServiceImpl extends AbstractLoginService implements DdtLoginService {
+
+	@Autowired
+	private UserLoginInfoService userLoginInfoService;
 
 	public ApiResponseResult accLogin(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
 			UserTypeEnum userTypeEnum, String account, String pwd) throws ServiceException {
 
 		String pwd_md5 = MD5.encode(pwd);
 		// 校验用户名密码
-		VLoginUser vloginUser = vloginUserMapper.getLoginAcc(userTypeEnum.getValue(), account, pwd_md5);
+		VLoginUser vloginUser = vloginUserService.getLoginAcc(userTypeEnum.getValue(), account, pwd_md5);
 		if (vloginUser == null) {
 			throw ServiceException.failure("用户名或密码错误");
 		}
 
-		// Long userId =60005000L
 		Long userId = vloginUser.getId();
 
 		// 校验用户名密码成功后, 生成设备号
@@ -65,10 +70,13 @@ public class AppLoginServiceImpl extends AbstractLoginService implements DdtLogi
 		}
 
 		// 查询用户登陆信息
-		LoginUserVO dbuser = new LoginUserVO();
+		TUserLoginInfo loginInfo = userLoginInfoService.findOne(client.getValue() + "", userTypeEnum.getValue(),
+				userid);
+		if (loginInfo == null) {
+			throw new UnLoginAccoutException("验证TOKEN失败");
+		}
 
-		userid = 60005000L;
-		String deviceId = "a5e41a483a9f48ab615052af000c2918";
+		String deviceId = loginInfo.getBsDeviceId();
 
 		/*
 		 * 查询用户信息的设备号 -生成token进行对比,
@@ -94,6 +102,15 @@ public class AppLoginServiceImpl extends AbstractLoginService implements DdtLogi
 	private void saveLoginInfo(ClientApplicationEnum client, TerminalTypeEnum terminalTypeEnum,
 			UserTypeEnum userTypeEnum, Long userId, String deviceId) {
 		// 保存设备号
+
+		TUserLoginInfo param = new TUserLoginInfo();
+		param.setClientId(client.getValue() + "");
+		param.setTerminalType(terminalTypeEnum.getValue());
+		param.setUserType(userTypeEnum.getValue());
+		param.setUserId(userId);
+		param.setBsDeviceId(deviceId);
+
+		userLoginInfoService.saveLoginInfo(param);
 
 	}
 

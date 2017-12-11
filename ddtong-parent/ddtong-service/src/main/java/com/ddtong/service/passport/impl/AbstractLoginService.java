@@ -8,12 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.ddtong.core.dao.mapper.passport.VLoginUserMapper;
-import com.ddtong.core.enums.TerminalTypeEnum;
-import com.ddtong.core.enums.UserTypeEnum;
-import com.ddtong.core.exception.ServiceException;
 import com.ddtong.core.util.MD5;
 import com.ddtong.core.vo.LoginUserVO;
+import com.ddtong.service.passport.VLoginUserService;
 import com.ddtong.service.redis.DdtRedisClient;
 
 public abstract class AbstractLoginService {
@@ -22,7 +19,7 @@ public abstract class AbstractLoginService {
 	protected DdtRedisClient ddtRedisClient;
 	
 	@Autowired
-	protected VLoginUserMapper vloginUserMapper;
+	protected VLoginUserService vloginUserService;
 
 	protected String getLoginUserRedisKey(LoginUserVO vo) {
 		String key = "loginuser_" + vo.getClient().getValue() + "_" + vo.getUserId();
@@ -31,8 +28,7 @@ public abstract class AbstractLoginService {
 
 	protected String buildDeviceId() {
 		String deviceId = UUID.randomUUID().toString().replace("-", "");
-		// return deviceId;
-		return "a5e41a483a9f48ab615052af000c2918";
+		return deviceId;
 	}
 
 	protected String buildToken(LoginUserVO vo) {

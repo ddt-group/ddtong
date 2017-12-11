@@ -22,7 +22,7 @@ public class TUserLoginInfo implements Serializable {
 	private Long userId;
 
 	// 设备号
-	private String bsDeviceId = "";
+	private String bsDeviceId;
 
 	// 登录状态：0-未登录，1-已登录
 	private Integer loginState = 0;

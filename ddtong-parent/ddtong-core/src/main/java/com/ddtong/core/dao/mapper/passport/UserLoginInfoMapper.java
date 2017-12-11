@@ -11,4 +11,6 @@ public interface UserLoginInfoMapper {
 
 	int insertLoginInfo(TUserLoginInfo userLoginInfo);
 
+	int updateLoginInfo(TUserLoginInfo userLoginInfo);
+
 }

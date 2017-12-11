@@ -7,11 +7,11 @@
         t.clientId, t.terminalType, t.userType, t.userId, t.bsDeviceId, t.loginState, t.bsIsLocked, t.loginErrorNum, t.createTime, t.lastLoginTime
     </sql>
 
-	<select id="selectLoginInfo" parameterType="com.ddtong.core.entity.passport.TUserLoginInfo">
+	<select id="selectLoginInfo" parameterType="com.ddtong.core.entity.passport.TUserLoginInfo" resultType="com.ddtong.core.entity.passport.TUserLoginInfo">
 		SELECT id, <include refid="UserLoginInfo_Column_List" /> 
 			from t_user_login_info t  
 		where t.clientId=#{clientId} and t.userType=#{userType} and t.userId=#{userId} 
-			<if test="bsDeviceId != null"> and t.bsDeviceId=#{bsDeviceId} </if>
+			<if test="bsDeviceId != null and '' != bsDeviceId "> and t.bsDeviceId=#{bsDeviceId} </if>
 	</select>
 	
 
@@ -22,5 +22,16 @@
 		VALUES (#{clientId},#{terminalType}, #{userType}, #{userId}, #{bsDeviceId}
 			, 0, 0, 0, NOW(), NOW())	
 	</insert>
+	
+	<update id="updateLoginInfo" parameterType="com.ddtong.core.entity.passport.TUserLoginInfo"  >
+		update t_user_login_info set lastLoginTime=NOW() 
+		<if test="bsDeviceId != null"> , bsDeviceId=#{bsDeviceId} </if>
+		<if test="terminalType != null"> , terminalType=#{terminalType} </if>
+		<if test="loginState != null"> , loginState=#{loginState} </if>
+		<if test="bsIsLocked != null"> , bsIsLocked=#{bsIsLocked} </if>
+		<if test="loginErrorNum != null"> , loginErrorNum=#{loginErrorNum} </if>
+		where clientId=#{clientId} and userType=#{userType} and userId=#{userId}
+	
+	</update>
 
 </mapper>

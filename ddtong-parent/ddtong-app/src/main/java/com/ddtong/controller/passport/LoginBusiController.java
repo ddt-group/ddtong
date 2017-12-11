@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,8 @@ import com.ddtong.service.passport.LoginBusiService;
 @RequestMapping(DdtongConstant.API_PATH + "/login")
 public class LoginBusiController {
 
+	private static final Logger logger = LoggerFactory.getLogger(LoginBusiController.class);
+	
 	@Autowired
 	private ApplicationContext ctx;
 
@@ -58,10 +62,12 @@ public class LoginBusiController {
 			TerminalTypeEnum terminalTypeEnum = TerminalTypeEnum.getEnumByValue(ddtterminaltype);
 			UserTypeEnum userTypeEnum = UserTypeEnum.getEnumByValue(ddtusertype);
 
-			return loginBusiService.accLogin(client, terminalTypeEnum, userTypeEnum, "", "");
+			return loginBusiService.accLogin(client, terminalTypeEnum, userTypeEnum, moblie, pwd);
 		} catch (ServiceException e) {
+			logger.error(e.getMessage(),e);
 			return e.getResult();
 		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
 			return ApiResponseResult.failure("系统处理失败").debugMessage(e.getMessage());
 		}
 
@@ -81,8 +87,6 @@ public class LoginBusiController {
 		
 		// 成为微信开发者 获取到appid , 组装微信OAuth2授权url , 打开微信扫码页面
 		// 注: 微信授权的回调地址,参数只能携带一个,回调接口采用Resfull 路径传参
-		
-		
 		return "redirect:";
 	}
 	
@@ -111,7 +115,12 @@ public class LoginBusiController {
 		Des des = new Des();
 		String sddt = des.strEnc(sddtorg, "firstKey", "secondKey", "thirdKey");
 		long datet = new Date().getTime();// 强制调用,避免前端使用缓存
-		String redirectUrl = "xxxx.xx.xx/xxx.html" + "?sddt=" + sddt + "&d=" + datet;
+		String redirectUrl = "/ddtong/passport/thridlogin.html" + "?sddt=" + sddt + "&d=" + datet;
+		
+		/*
+		 * 由于前端代码与后端代码分离, 先重定向到static/ddtong/passport/thridlogin.html , 由页面 再跳转到
+		 * 前段开发的页面 , 保证浏览器访问后端建立回话,因为第三方登陆成功后临时保存到回话中的
+		 */
 		return "redirect:" + redirectUrl;
 	}
 	
@@ -199,8 +208,10 @@ public class LoginBusiController {
 			return ApiResponseResult.success("成功").data(loginuser);
 
 		} catch (UnLoginAccoutException e) {
+			logger.error(e.getMessage(),e);
 			return ApiResponseResult.failure("未登陆").status("401");
 		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
 			return ApiResponseResult.failure("系统处理失败").debugMessage(e.getMessage());
 		}
 	}

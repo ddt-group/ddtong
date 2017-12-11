@@ -141,20 +141,24 @@ public class MybatisConfiguration {
                 //    return DataSourceType.write.getType();
         			//throw new NullPointerException("数据库路由时，决定使用哪个数据库源类型不能为空...");
         			
-        			System.err.println("数据库源类型不能为空, 数据库路由无法决定使用哪个数据库, 采取默认使用  write 数据库write.............");
-        			
+        			//System.err.println("数据库源类型不能为空, 数据库路由无法决定使用哪个数据库, 采取默认使用  write 数据库write.............");
+        			log.info("数据库源类型不能为空, 数据库路由无法决定使用哪个数据库, 采取默认使用  write 数据库write.............");
         			 return DataSourceType.write.getType();
         		}
         		
                 if (typeKey.equals(DataSourceType.write.getType())){
-                	System.err.println("使用数据库write.............");
+                	//System.err.println("使用数据库write.............");
+                	log.info("使用数据库write.............");
                     return DataSourceType.write.getType();
                 }
                 	
                 //读库， 简单负载均衡
                 int number = count.getAndAdd(1);
                 int lookupKey = number % readSize;
-                System.err.println("使用数据库read-"+(lookupKey+1));
+                
+                //System.err.println("使用数据库read-"+(lookupKey+1));
+                log.info("使用数据库read-"+(lookupKey+1));
+                
                 return DataSourceType.read.getType()+(lookupKey+1);
         	}
         };
