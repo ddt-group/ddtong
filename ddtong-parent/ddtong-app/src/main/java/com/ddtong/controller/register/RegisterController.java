@@ -40,12 +40,12 @@ public class RegisterController {
 	@RequestMapping("regBasicInfo")
 	@ResponseBody
 	public ApiResponseResult regBasicInfo(HttpServletRequest request, HttpServletResponse response){
-		TreeMap<String, String> map = MapUtil.formatRequest(request);
-		String recommendId = map.containsKey("recommendId") ? "" : map.get("recommendId");	// 推荐人
-		String phone = map.containsKey("phone") ? "" : map.get("phone");					// 手机号
-		String pwd = map.containsKey("pwd") ? "" : map.get("pwd");							// 密码
-		String verifyCode = map.containsKey("verifyCode") ? "" : map.get("verifyCode");		// 验证码
-		String sendType = map.containsKey("sendType") ? "" : map.get("sendType");			// 发送验证码类型
+		TreeMap<String, String> paramMap = MapUtil.formatRequest(request);
+		String recommendId = paramMap.containsKey("recommendId") ? "" : paramMap.get("recommendId");	// 推荐人
+		String phone = paramMap.containsKey("phone") ? "" : paramMap.get("phone");					// 手机号
+		String pwd = paramMap.containsKey("pwd") ? "" : paramMap.get("pwd");							// 密码
+		String verifyCode = paramMap.containsKey("verifyCode") ? "" : paramMap.get("verifyCode");		// 验证码
+		String sendType = paramMap.containsKey("sendType") ? "" : paramMap.get("sendType");			// 发送验证码类型
 		// 1.校验参数 2.校验推荐人 3.校验手机号 4.校验短信验证码
 		return ApiResponseResult.success("成功").status("0");
 	}
@@ -65,7 +65,7 @@ public class RegisterController {
 	@RequestMapping("regMerchant")
 	@ResponseBody
 	public ApiResponseResult regMerchant(HttpServletRequest request, HttpServletResponse response, TMerchant merchant){
-		TreeMap<String, String> map = MapUtil.formatRequest(request);
+		TreeMap<String, String> paramMap = MapUtil.formatRequest(request);
 		// 1.校验参数 2.校验推荐人 3.校验手机号 4.校验工商注册名称 5.校验店铺名称 6.新增商家 7.新增账户信息 
 		return ApiResponseResult.success("成功").status("0");
 	}

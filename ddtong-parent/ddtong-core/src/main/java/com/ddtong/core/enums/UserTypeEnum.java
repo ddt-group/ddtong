@@ -24,4 +24,7 @@ public enum UserTypeEnum {
 		throw new IllegalArgumentException(UserTypeEnum.class.getName() + " No element matches " + value);
 	}
 
+	public static void main(String[] args) {
+		System.out.println(getEnumByValue(1));
+	}
 }
