@@ -447,3 +447,19 @@ CREATE TABLE `t_ysh_user` (
   `user_name` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_user_login_info` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `clientId` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '终端应用 ClientApplicationEnum',
+  `terminalType` int(2) NOT NULL COMMENT '客户端类型 TerminalTypeEnum',
+  `userType` int(2) NOT NULL COMMENT '用户类型 UserTypeEnum',
+  `userId` bigint(11) NOT NULL COMMENT '用户id',
+  `bsDeviceId` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '设备号',
+  `loginState` int(2) NOT NULL COMMENT '登录状态：0-未登录，1-已登录',
+  `bsIsLocked` int(2) NOT NULL COMMENT '是否锁定用户（当天内登录错误5次锁定该用户）：0-否，1-是',
+  `loginErrorNum` int(2) NOT NULL COMMENT '当天内登录错误次数',
+  `createTime` datetime NOT NULL COMMENT '创建时间',
+  `lastLoginTime` datetime NOT NULL COMMENT '最后登录时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户登录信息';
