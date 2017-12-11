@@ -64,4 +64,30 @@
 		    	, #{upateTime}
 		    </if>
 	</insert>
+	
+	<sql id="findPage">
+		where
+	    	1=1
+			<if test="id != null">
+				AND id = #{id}
+			</if>
+		      <if test="userId != null" >
+		       AND user_id = #{userId}
+		      </if>
+		      <if test="userType != null" >
+		       AND user_type = #{userType}
+		      </if>
+		      <if test="actState != null" >
+		       AND act_state = #{actState}
+		      </if>
+		      <if test="amtState != null" >
+		       AND amt_state = #{amtState}
+		      </if>
+	</sql>
+	
+	<select id="findAccount" resultMap="entity">
+	SELECT    <include refid="allField"/>
+	FROM      <include refid="table"/>
+	<include refid="findPage"/>	
+	</select>
 </mapper>

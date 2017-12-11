@@ -19,8 +19,9 @@ public class MapUtil {
 	* @author xc_qin
 	* @date 2017年4月1日 下午1:56:47
 	 */
-	public static Map<String, String> strMap(String msg, String...strs){
+	public static Map<String, String> strMap(String code, String msg, String...strs){
 		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("code", code);
 		resultMap.put("msg", msg);
 		try {
 			if(null != strs){
@@ -41,8 +42,9 @@ public class MapUtil {
 		return resultMap;
 	}
 	
-	public static Map<String, Object> objMap(String msg, String...strs){
+	public static Map<String, Object> objMap(String code, String msg, String...strs){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("code", code);
 		resultMap.put("msg", msg);
 		try {
 			if(null != strs){
