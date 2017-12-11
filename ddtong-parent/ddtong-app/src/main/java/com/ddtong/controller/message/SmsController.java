@@ -36,7 +36,7 @@ public class SmsController {
 	* @author xc_qin
 	* @date 2017年12月7日 下午4:53:24
 	 */
-	@RequestMapping("sendMsg")
+	@RequestMapping("sendRegMsg")
 	@ResponseBody
 	public ApiResponseResult sendRegMsg(HttpServletRequest request, HttpServletResponse response){
 		TreeMap<String, String> map = MapUtil.formatRequest(request);

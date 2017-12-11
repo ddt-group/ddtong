@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddtong.core.common.DdtongConstant;
+import com.ddtong.core.entity.integralLog.TIntegralLog;
 import com.ddtong.core.entity.userBank.TUserBank;
 import com.ddtong.core.entity.withdraw.TWithdraw;
 import com.ddtong.core.util.MapUtil;
 import com.ddtong.core.vo.ApiResponseResult;
-import com.ddtong.core.vo.Page;
 import com.ddtong.service.passport.LoginBusiService;
+import com.github.pagehelper.PageInfo;
 
 @Controller
 @RequestMapping(DdtongConstant.APP_API_PATH + "/withdraw/")
@@ -51,7 +52,7 @@ public class WithdrawController {
 		// 校验登录信息
 		//loginBusiService.validateToken();
 		// 总分宝
-		resultMap.put("fbNum", "100000");
+		resultMap.put("integralNum", "100000");
 		// 支持的提现类型
 		List<String> wdTypeList = new ArrayList<String>();
 		wdTypeList.add("红积分");
@@ -112,7 +113,12 @@ public class WithdrawController {
 		// 校验登录信息
 		//loginBusiService.validateToken();
 		// 查询提现记录信息
-		Page page = new Page(1, 20);
+		PageInfo<TIntegralLog> page = new PageInfo<TIntegralLog>();
+		page.setPageNum(1);
+		page.setPageSize(20);
+		page.setSize(20);
+		page.setTotal(100);
+		page.setPages(5);
 		resultMap.put("page", page);
 		List<TWithdraw> withdrawList = new ArrayList<TWithdraw>();
 		TWithdraw wd = new TWithdraw(1L, 1L, 1L, "123456", "1", new BigDecimal(1000.00), new BigDecimal(5.00), new BigDecimal(995.00), 123456L, "前端", "测试银行", "0", "0", new Date(), 1L, new Date(), "1", new Date());

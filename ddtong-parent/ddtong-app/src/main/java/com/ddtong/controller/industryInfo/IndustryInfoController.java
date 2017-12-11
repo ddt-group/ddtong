@@ -49,7 +49,10 @@ public class IndustryInfoController {
 	@ResponseBody
 	public ApiResponseResult findIndustryList(HttpServletRequest request, HttpServletResponse response){
 		List<TIndustryInfo> list = new ArrayList<TIndustryInfo>();
-		list = ((List<TIndustryInfo>) ddtReidsClient.get("industry"));
+		try {
+			list = ((List<TIndustryInfo>) ddtReidsClient.get("industry"));
+		} catch (Exception e) {
+		}
 		if(null == list || list.isEmpty() || list.size() < 0){
 			list = new ArrayList<TIndustryInfo>();
 			TIndustryInfo ind = new TIndustryInfo(1L, "美食", "http://www.baidu.com");

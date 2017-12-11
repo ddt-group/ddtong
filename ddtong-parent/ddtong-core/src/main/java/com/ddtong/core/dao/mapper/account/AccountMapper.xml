@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ddtong.core.dao.mapper.account.AccountMapper">
+	<sql id="table"><![CDATA[t_account]]></sql>	
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="allField">
+        <![CDATA[id, user_id, user_type, act_state, amt_state, total_fb, fb, ava_fb, 
+        		freeze_fb, total_red_integral, red_integral, ava_red_integral, 
+        		free_red_integral, total_blue_integral, blue_integral, ava_blue_integral, 
+        		free_blue_integral, free_blue_integral, green_integral, ava_green_integral, 
+        		free_green_integral, free_green_integral, runbat_time,ava_fb_use]]>
+	</sql>
+	
+	<resultMap id="entity" type="com.ddtong.core.entity.account.TAccount" >
+    	<result property="id" column="id"/>
+     	<result property="userId" column="user_id"/>
+     	<result property="userType" column="user_type"/>
+     	<result property="actState" column="act_state"/>
+     	<result property="amtState" column="amt_state"/>
+     	<result property="totalFb" column="total_fb"/>
+     	<result property="fb" column="fb"/>
+     	<result property="avaFb" column="ava_fb"/>
+     	<result property="freezeFb" column="freeze_fb"/>
+     	<result property="totalRedIntegral" column="total_red_integral"/>
+     	<result property="redIntegral" column="red_integral"/>
+     	<result property="avaRedIntegral" column="ava_red_integral"/>
+     	<result property="freeRedIntegral" column="free_red_integral"/>
+     	<result property="totalBlueIntegral" column="total_blue_integral"/>
+     	<result property="blueIntegral" column="blue_integral"/>
+     	<result property="avaBlueIntegral" column="ava_blue_integral"/>
+     	<result property="freeBlueIntegral" column="free_blue_integral"/>
+     	<result property="totalGreenIntegral" column="total_green_integral"/>
+     	<result property="greenIntegral" column="green_integral"/>
+     	<result property="avaGreenIntegral" column="ava_green_integral"/>
+     	<result property="freeGreenIntegral" column="free_green_integral"/>
+     	<result property="upateTime" column="update_time"/>
+     	<result property="runbatTime" column="runbat_time"/>
+     	<result property="avaFbUse" column="runbat_time"/>
+  </resultMap>
+ 
+  <insert id="insertAccount" useGeneratedKeys="true" keyProperty="id" parameterType="com.ddtong.core.entity.account.TAccount">
+		INSERT INTO <include refid="table"/> (
+			id,
+			<if test="userId != null" >
+       			, user_id
+      		</if>
+		    <if test="userType != null" >
+		    	, user_type
+		    </if>
+		    <if test="update_time != null" >
+		    	, upateTime
+		    </if>
+      	) values (
+       		null,
+       		<if test="userId != null" >
+       			, #{userId}
+      		</if>
+      		<if test="userType != null" >
+       			, #{userType}
+      		</if>
+      		<if test="updateTime != null" >
+		    	, #{upateTime}
+		    </if>
+	</insert>
+</mapper>

@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddtong.core.common.DdtongConstant;
+import com.ddtong.core.entity.integralLog.TIntegralLog;
 import com.ddtong.core.entity.userBank.TUserBank;
 import com.ddtong.core.util.MapUtil;
 import com.ddtong.core.vo.ApiResponseResult;
-import com.ddtong.core.vo.Page;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 
@@ -127,7 +128,12 @@ public class AccountController {
 		// 校验登录信息
 		//loginBusiService.validateToken();
 		// 查询提现记录信息
-		Page page = new Page(1, 20);
+		PageInfo<TIntegralLog> page = new PageInfo<TIntegralLog>();
+		page.setPageNum(1);
+		page.setPageSize(20);
+		page.setSize(20);
+		page.setTotal(100);
+		page.setPages(5);
 		resultMap.put("page", page);
 		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();

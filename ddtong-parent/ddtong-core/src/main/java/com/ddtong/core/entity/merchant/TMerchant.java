@@ -79,6 +79,8 @@ public class TMerchant implements Serializable{
 	
 	private String mainBusiness;
 	
+	private String shopMobile;
+	
 	
 	public Long getId() {
 		return id;
@@ -895,6 +897,32 @@ public class TMerchant implements Serializable{
 		this.mainBusiness = mainBusiness;
 	}
 
+	/**
+	 * 
+	* @Title: getShopMobile 
+	* @Description: 经营电话
+	* @return     
+	* @throws 
+	* @author xc_qin
+	* @date 2017年12月11日 下午3:13:37
+	 */
+	public String getShopMobile() {
+		return shopMobile;
+	}
+
+	/**
+	 * 
+	* @Title: setShopMobile 
+	* @Description: 经营电话
+	* @param shopMobile     
+	* @throws 
+	* @author xc_qin
+	* @date 2017年12月11日 下午3:13:46
+	 */
+	public void setShopMobile(String shopMobile) {
+		this.shopMobile = shopMobile;
+	}
+
 	public TMerchant() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -905,7 +933,7 @@ public class TMerchant implements Serializable{
 			String payPassword, String enterpriseName, String shopName, String industryType, String address,
 			String webSite, Long provinceId, Long cityId, Long areaId, String longitude, String latitude,
 			String enterpriseCode, String legalName, String email, String businessLicense, String positiveIdcard,
-			String negativeIdcard, String logo, String mainBusiness) {
+			String negativeIdcard, String logo, String mainBusiness, String shopMobile) {
 		super();
 		this.id = id;
 		this.nickName = nickName;
@@ -939,7 +967,10 @@ public class TMerchant implements Serializable{
 		this.negativeIdcard = negativeIdcard;
 		this.logo = logo;
 		this.mainBusiness = mainBusiness;
+		this.shopMobile = shopMobile;
 	}
+
+	
 
 	@Override
 	public String toString() {
@@ -952,7 +983,7 @@ public class TMerchant implements Serializable{
 				+ ", areaId=" + areaId + ", longitude=" + longitude + ", latitude=" + latitude + ", enterpriseCode="
 				+ enterpriseCode + ", legalName=" + legalName + ", email=" + email + ", businessLicense="
 				+ businessLicense + ", positiveIdcard=" + positiveIdcard + ", negativeIdcard=" + negativeIdcard
-				+ ", logo=" + logo + ", mainBusiness=" + mainBusiness + "]";
+				+ ", logo=" + logo + ", mainBusiness=" + mainBusiness + ", shopMobile=" + shopMobile + "]";
 	}
 
 	@Override
@@ -991,6 +1022,7 @@ public class TMerchant implements Serializable{
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result + ((webSite == null) ? 0 : webSite.hashCode());
+		result = prime * result + ((shopMobile == null) ? 0 : shopMobile.hashCode());
 		return result;
 	}
 
@@ -1162,6 +1194,11 @@ public class TMerchant implements Serializable{
 			if (other.webSite != null)
 				return false;
 		} else if (!webSite.equals(other.webSite))
+			return false;
+		if (shopMobile == null) {
+			if (other.shopMobile != null)
+				return false;
+		} else if (!shopMobile.equals(other.shopMobile))
 			return false;
 		return true;
 	}

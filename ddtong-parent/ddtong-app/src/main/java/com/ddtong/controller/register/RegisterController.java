@@ -43,7 +43,6 @@ public class RegisterController {
 		TreeMap<String, String> paramMap = MapUtil.formatRequest(request);
 		String recommendId = paramMap.containsKey("recommendId") ? "" : paramMap.get("recommendId");	// 推荐人
 		String phone = paramMap.containsKey("phone") ? "" : paramMap.get("phone");					// 手机号
-		String pwd = paramMap.containsKey("pwd") ? "" : paramMap.get("pwd");							// 密码
 		String verifyCode = paramMap.containsKey("verifyCode") ? "" : paramMap.get("verifyCode");		// 验证码
 		String sendType = paramMap.containsKey("sendType") ? "" : paramMap.get("sendType");			// 发送验证码类型
 		// 1.校验参数 2.校验推荐人 3.校验手机号 4.校验短信验证码
